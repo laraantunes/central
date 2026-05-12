@@ -1,0 +1,11 @@
+# Prevent access to sensitive files
+<FilesMatch "\.(env|json)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Prevent directory listing
+Options -Indexes
+
+# Error pages (optional)
+ErrorDocument 403 /central/index.php
