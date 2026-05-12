@@ -207,6 +207,22 @@ button:hover {
     margin-top: 0.5rem;
 }
 
+.input-with-loader {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-loader .spinner {
+    position: absolute;
+    right: 12px;
+    margin: 0;
+}
+
+.input-with-loader input {
+    padding-right: 40px;
+}
+
 /* Admin icons */
 .admin-actions {
     position: absolute;

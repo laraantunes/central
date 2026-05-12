@@ -22,6 +22,7 @@ sort($allCategories);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar - Central</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📑</text></svg>">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
@@ -129,9 +130,12 @@ sort($allCategories);
                 <input type="hidden" name="id" id="linkId">
                 
                 <div class="form-group">
-                    <label>URL <span id="urlLoading" class="spinner hidden"></span></label>
-                    <input type="url" name="url" id="linkUrl" placeholder="https://..." required 
-                           onblur="fetchLinkInfo(this.value)">
+                    <label>URL</label>
+                    <div class="input-with-loader">
+                        <input type="url" name="url" id="linkUrl" placeholder="https://..." required 
+                               onblur="fetchLinkInfo(this.value)">
+                        <span id="urlLoading" class="spinner hidden"></span>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -200,10 +204,13 @@ sort($allCategories);
 
         async function fetchLinkInfo(url) {
             if (!url) return;
-            if (document.getElementById('linkId').value) return; // Don't auto-fetch if editing
+            if (document.getElementById('linkId').value) return;
 
             const loader = document.getElementById('urlLoading');
             loader.classList.remove('hidden');
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 seconds timeout
 
             const formData = new FormData();
             formData.append('url', url);
@@ -211,14 +218,20 @@ sort($allCategories);
             try {
                 const response = await fetch('api.php?action=fetch_info', {
                     method: 'POST',
-                    body: formData
+                    body: formData,
+                    signal: controller.signal
                 });
                 const data = await response.json();
                 if (data.title) document.getElementById('linkTitle').value = data.title;
                 if (data.favicon) document.getElementById('linkFavicon').value = data.favicon;
             } catch (e) {
-                console.error("Fetch failed", e);
+                if (e.name === 'AbortError') {
+                    console.warn("Fetch timed out");
+                } else {
+                    console.error("Fetch failed", e);
+                }
             } finally {
+                clearTimeout(timeoutId);
                 loader.classList.add('hidden');
             }
         }
