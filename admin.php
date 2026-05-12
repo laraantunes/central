@@ -83,6 +83,7 @@ sort($allCategories);
                         </div>
                     </div>
                     <div class="actions">
+                        <a href="<?= htmlspecialchars($link['url']) ?>" target="_blank" class="icon-btn" title="Abrir link">↗</a>
                         <button class="icon-btn" onclick="editLink(<?= htmlspecialchars(json_encode($link)) ?>)">✎</button>
                         <button class="icon-btn delete" 
                                 hx-post="api.php?action=delete_link" 

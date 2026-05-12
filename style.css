@@ -249,6 +249,11 @@ button:hover {
     cursor: pointer;
     color: white;
     font-size: 0.8rem;
+    text-decoration: none;
+}
+
+.icon-btn:hover {
+    background: var(--primary-color);
 }
 
 .icon-btn.delete:hover {
