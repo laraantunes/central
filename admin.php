@@ -71,7 +71,8 @@ sort($allCategories);
         <div id="links-list">
             <?php foreach ($links as $link): ?>
                 <div class="admin-link-card" data-id="<?= $link['id'] ?>">
-                    <img src="<?= htmlspecialchars($link['favicon'] ?: 'https://www.google.com/s2/favicons?sz=64&domain=' . parse_url($link['url'], PHP_URL_HOST)) ?>" alt="">
+                    <?php $favicon = $link['favicon'] ?: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🔗</text></svg>'; ?>
+                    <img src="<?= htmlspecialchars($favicon) ?>" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🔗</text></svg>'">
                     <div class="info">
                         <span class="title"><?= htmlspecialchars($link['title']) ?></span>
                         <span class="url"><?= htmlspecialchars($link['url']) ?></span>

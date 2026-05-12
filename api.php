@@ -69,9 +69,7 @@ if ($action === 'fetch_info') {
             }
         }
 
-        if (!$favicon) {
-            $favicon = $baseUrl . "/favicon.ico";
-        }
+        // No fallback here to keep it empty if not found
     }
 
     echo json_encode(['title' => $title, 'favicon' => $favicon]);
@@ -210,10 +208,10 @@ if ($action === 'search') {
     } else {
         echo '<div class="links-grid">';
         foreach ($results as $link) {
-            $favicon = $link['favicon'] ?: 'https://www.google.com/s2/favicons?sz=64&domain=' . parse_url($link['url'], PHP_URL_HOST);
+            $favicon = $link['favicon'] ?: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🔗</text></svg>';
             echo '
             <a href="' . htmlspecialchars($link['url']) . '" target="_blank" class="link-card">
-                <img src="' . htmlspecialchars($favicon) . '" alt="' . htmlspecialchars($link['title']) . '">
+                <img src="' . htmlspecialchars($favicon) . '" alt="' . htmlspecialchars($link['title']) . '" onerror="this.src=\'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🔗</text></svg>\'">
                 <span>' . htmlspecialchars($link['title']) . '</span>
             </a>';
         }

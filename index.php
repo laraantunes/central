@@ -49,10 +49,10 @@ function renderLinks($links) {
         echo '<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); margin-top: 2rem;">Nenhum link encontrado nesta categoria.</div>';
     }
     foreach ($links as $link) {
-        $favicon = $link['favicon'] ?: 'https://www.google.com/s2/favicons?sz=64&domain=' . parse_url($link['url'], PHP_URL_HOST);
+        $favicon = $link['favicon'] ?: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🔗</text></svg>';
         echo '
         <a href="' . htmlspecialchars($link['url']) . '" target="_blank" class="link-card">
-            <img src="' . htmlspecialchars($favicon) . '" alt="' . htmlspecialchars($link['title']) . '" onerror="this.src=\'https://www.google.com/s2/favicons?sz=64&domain=google.com\'">
+            <img src="' . htmlspecialchars($favicon) . '" alt="' . htmlspecialchars($link['title']) . '" onerror="this.src=\'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🔗</text></svg>\'">
             <span>' . htmlspecialchars($link['title']) . '</span>
         </a>';
     }
