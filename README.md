@@ -10,6 +10,7 @@
 - 🏗️ **Gestão Automática**: Ao adicionar um link, a aplicação busca automaticamente o título da página e o favicon.
 - ↕️ **Reordenação Visual**: Arraste e solte seus links no painel de gerenciamento para definir a ordem de exibição.
 - 🔍 **Busca Rápida**: Pesquise links por título ou URL instantaneamente com o atalho `Ctrl+K` ou `Cmd+K`.
+- ➕ **Adição Instantânea**: Adicione novos links diretamente do dashboard com o botão `📄` ou o atalho `Ctrl+I` ou `Cmd+I`.
 - 📂 **Armazenamento Simples**: Utiliza JSON para persistência de dados, dispensando o uso de bancos de dados complexos.
 - 🛡️ **Segurança**: Arquivo `.htaccess` configurado para impedir acesso direto a arquivos sensíveis.
 
