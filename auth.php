@@ -1,4 +1,8 @@
 <?php
+// Increase session time to 3 months (90 days)
+$session_timeout = 90 * 24 * 60 * 60;
+ini_set('session.gc_maxlifetime', $session_timeout);
+session_set_cookie_params($session_timeout);
 session_start();
 
 function loadEnv($path) {
