@@ -68,6 +68,8 @@ sort($allCategories);
             <button onclick="openLinkModal()" class="add-btn">+ Adicionar Link</button>
         </header>
 
+        <input type="text" id="adminSearchInput" placeholder="Buscar links por título, URL ou categoria..." onkeyup="filterAdminLinks()" style="width:100%; padding:0.8rem; margin-bottom:1.5rem; border-radius:10px; border:1px solid var(--glass-border); background:rgba(255,255,255,0.05); color:white;">
+
         <div id="links-list">
             <?php foreach ($links as $link): ?>
                 <div class="admin-link-card" data-id="<?= $link['id'] ?>">
@@ -83,6 +85,7 @@ sort($allCategories);
                         </div>
                     </div>
                     <div class="actions">
+                        <button class="icon-btn" onclick="copyAdminLink('<?= htmlspecialchars(addslashes($link['url'])) ?>', this)" title="Copiar link">⎘</button>
                         <a href="<?= htmlspecialchars($link['url']) ?>" target="_blank" class="icon-btn" title="Abrir link">↗</a>
                         <button class="icon-btn" onclick="editLink(<?= htmlspecialchars(json_encode($link)) ?>)">✎</button>
                         <button class="icon-btn delete" 
@@ -271,6 +274,31 @@ sort($allCategories);
                 formData.append('category', cat);
                 fetch('api.php?action=delete_category', { method: 'POST', body: formData });
             }
+        }
+        function filterAdminLinks() {
+            const query = document.getElementById('adminSearchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.admin-link-card');
+            
+            cards.forEach(card => {
+                const textContent = card.innerText.toLowerCase();
+                if (textContent.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function copyAdminLink(url, btn) {
+            navigator.clipboard.writeText(url).then(() => {
+                const originalText = btn.innerText;
+                btn.innerText = '✓';
+                btn.style.color = '#4ade80';
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.color = 'white';
+                }, 2000);
+            });
         }
 
         // Reordering

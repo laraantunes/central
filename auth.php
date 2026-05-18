@@ -1,8 +1,17 @@
 <?php
 // Increase session time to 3 months (90 days)
 $session_timeout = 90 * 24 * 60 * 60;
+$session_dir = __DIR__ . '/data/sessions';
+if (!is_dir($session_dir)) {
+    mkdir($session_dir, 0777, true);
+}
+ini_set('session.save_path', $session_dir);
 ini_set('session.gc_maxlifetime', $session_timeout);
-session_set_cookie_params($session_timeout);
+session_set_cookie_params([
+    'lifetime' => $session_timeout,
+    'path' => '/',
+    'samesite' => 'Lax'
+]);
 session_start();
 
 function loadEnv($path) {
